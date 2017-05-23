@@ -9,7 +9,7 @@ function __git_all -d "Iterate a git command over all discovered repositories."
         set -l repo (realpath "$repo/..")
         echo-info --minor ">> $repo"
         pushd $repo
-        git $argv
+        git -c color.status=always -c color.ui=always $argv
         popd
     end
 end
