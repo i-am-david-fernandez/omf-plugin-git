@@ -27,6 +27,10 @@ function git -d "Git command wrapper"
                 __git_all $argv | less -rFX
                 return
 
+            case 'diff'
+                command git difftool --extcmd "icdiff --line-numbers --no-bold" --no-prompt $argv | less -rFX
+                return
+
             case '*'
                 set new_args $new_args $arg
         end
