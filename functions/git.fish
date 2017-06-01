@@ -15,9 +15,8 @@ function __git_all -d "Iterate a git command over all discovered repositories."
 end
 
 function git -d "Git command wrapper"
-    # Package entry-point
 
-    set new_args
+    set -l new_args
 
     for arg in $argv
         set -e argv[1]
@@ -28,8 +27,12 @@ function git -d "Git command wrapper"
                 return
 
             case 'diff'
-                command git difftool --extcmd "icdiff --line-numbers --no-bold" --no-prompt $argv | less -rFX
-                return
+                if which icdiff
+                    command git difftool --extcmd "icdiff --line-numbers --no-bold" --no-prompt $argv | less -rFX
+                    return
+                else
+                    set new_args $new_args $arg
+                end
 
             case '*'
                 set new_args $new_args $arg
