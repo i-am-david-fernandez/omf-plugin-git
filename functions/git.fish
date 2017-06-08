@@ -27,7 +27,7 @@ function git -d "Git command wrapper"
                 return
 
             case 'diff'
-                if which icdiff
+                if which icdiff > /dev/null ^&1
                     command git difftool --extcmd "icdiff --line-numbers --no-bold" --no-prompt $argv | less -rFX
                     return
                 else
