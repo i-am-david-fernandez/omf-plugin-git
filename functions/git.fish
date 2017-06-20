@@ -18,14 +18,16 @@ function git -d "Git command wrapper"
 
     set -l new_args
 
+    if test $argv[1] = '--all'
+        set -e argv[1]
+        __git_all $argv | less -rFX
+        return
+    end
+
     for arg in $argv
         set -e argv[1]
 
         switch $arg
-            case '--all'
-                __git_all $argv | less -rFX
-                return
-
             case 'diff'
                 if which icdiff > /dev/null ^&1
                     command git difftool --extcmd "icdiff --line-numbers --no-bold" --no-prompt $argv | less -rFX
